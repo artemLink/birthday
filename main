@@ -1,22 +1,22 @@
 from datetime import date, datetime, timedelta
 
 
-def get_birthdays_per_week(users):
+def get_birthdays_per_week(users, date_today = datetime.today()):
     users_birthdays = {}
-    date_today = datetime.today()
     for user in users:
         user_birthday = user['birthday']
         name = user['name']
-        user_birthday = datetime(date_today.year, user_birthday.month, user_birthday.day)
+        if 7 >= user_birthday.day >= 1 == user_birthday.month:
+            user_birthday = datetime(date_today.year+1, user_birthday.month, user_birthday.day)
+        else:
+            user_birthday = datetime(date_today.year, user_birthday.month, user_birthday.day)
+
         days_delta = (user_birthday - date_today).days
         if -1 <= days_delta < 8:
             day_of_week = user_birthday.weekday()
-
             if day_of_week == 5 or day_of_week == 6:
                 user_birthday += timedelta(days=(7 - day_of_week))
-
             user_day_birthday = user_birthday.strftime('%A')
-
             if user_day_birthday not in users_birthdays:
                 users_birthdays[user_day_birthday] = [name]
             else:
