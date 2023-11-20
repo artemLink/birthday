@@ -1,7 +1,9 @@
 from datetime import date, datetime, timedelta
 
 
-def get_birthdays_per_week(users, date_today = datetime.today()):
+def get_birthdays_per_week(users):
+    date_today = date.today()
+    date_today = datetime.combine(date_today, datetime.min.time())
     users_birthdays = {}
     for user in users:
         user_birthday = user['birthday']
